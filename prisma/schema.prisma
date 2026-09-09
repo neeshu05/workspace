@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String       @id @default(uuid())
+  email     String       @unique
+  password  String
+  name      String?
+  role      String?
+  sessions  Session[]
+  profile   Profile?
+  activity  ActivityLog[]
+  createdAt DateTime     @default(now())
+}
+
+model Profile {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  department     String?
+  avatarInitials String?
+  avatarImage    String?
+  bio            String?
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  updatedAt      DateTime @updatedAt
+}
+
+model ActivityLog {
+  id        String   @id @default(uuid())
+  userId    String
+  action    String
+  detail    String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  refreshToken String   @unique
+  userAgent    String?
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Alert {
+  id        String   @id @default(uuid())
+  level     String
+  title     String
+  location  String
+  closed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Settings {
+  id                 Int      @id @default(1)
+  liveTrackingPaused Boolean  @default(false)
+  updatedAt          DateTime @updatedAt
+}
+
+model AlertStats {
+  id        Int      @id @default(1)
+  total     Int      @default(0)
+  active    Int      @default(0)
+  closed    Int      @default(0)
+  updatedAt DateTime @updatedAt
+}

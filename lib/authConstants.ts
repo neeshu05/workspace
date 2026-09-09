@@ -1,0 +1,2 @@
+export const ACCESS_TOKEN_TTL_SECONDS = 15 * 60;
+export const REFRESH_MARGIN_SECONDS = 120;

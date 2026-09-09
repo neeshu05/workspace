@@ -1,0 +1,36 @@
+{
+  "name": "warehouse-ops-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "node prisma/seed.mjs",
+    "alerts:generate": "node scripts/alerts-generator.mjs"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "bcrypt": "^6.0.0",
+    "framer-motion": "^13.2.0",
+    "jsonwebtoken": "^9.0.3",
+    "lodash": "^4.18.1",
+    "next": "16.2.12",
+    "prisma": "^6.19.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "typescript": "^5.0.0",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/lodash": "^4.17.25"
+  }
+}
