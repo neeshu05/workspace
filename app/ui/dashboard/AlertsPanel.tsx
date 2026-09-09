@@ -8,22 +8,24 @@ import AlertModal from "./AlertModal";
 import ErrorState from "../shared/ErrorState";
 
 export default function AlertsPanel({ variant }: { variant: "widget" | "full" }) {
-  const latestAlerts = useAlertsStore((s) => s.latestAlerts);
-  const pagedAlerts = useAlertsStore((s) => s.pagedAlerts);
-  const pageIndex = useAlertsStore((s) => s.pageIndex);
-  const resultVersion = useAlertsStore((s) => s.resultVersion);
-  const hasMore = useAlertsStore((s) => s.hasMore);
-  const search = useAlertsStore((s) => s.search);
-  const selected = useAlertsStore((s) => s.selected);
-  const loadLatest = useAlertsStore((s) => s.loadLatest);
-  const enterAlertsPage = useAlertsStore((s) => s.enterAlertsPage);
-  const setSearch = useAlertsStore((s) => s.setSearch);
-  const goNext = useAlertsStore((s) => s.goNext);
-  const goPrev = useAlertsStore((s) => s.goPrev);
-  const select = useAlertsStore((s) => s.select);
-  const close = useAlertsStore((s) => s.close);
-  const error = useAlertsStore((s) => s.error);
-  const stats = useAlertStatsStore((s) => s.stats);
+  const {
+    latestAlerts,
+    pagedAlerts,
+    pageIndex,
+    resultVersion,
+    hasMore,
+    search,
+    selected,
+    error,
+    loadLatest,
+    enterAlertsPage,
+    setSearch,
+    goNext,
+    goPrev,
+    select,
+    close,
+  } = useAlertsStore();
+  const { stats } = useAlertStatsStore();
 
   useEffect(() => {
     if (variant === "widget") {

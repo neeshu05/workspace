@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-
-const DEFAULT_TREND = [60, 72, 55, 83, 67, 90, 76];
+import { DEFAULT_TREND } from "../../../lib/utils/trend";
 
 export default function FulfillmentChart({ page, trend }: { page: string; trend?: number[] }) {
   return (

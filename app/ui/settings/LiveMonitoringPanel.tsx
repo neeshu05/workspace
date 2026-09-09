@@ -1,5 +1,6 @@
 "use client";
 import { useSettingsStore } from "../../../lib/stores/useSettingsStore";
+import ToggleRow from "../shared/ToggleRow";
 
 export default function LiveMonitoringPanel() {
   const paused = useSettingsStore((s) => s.liveTrackingPaused);
@@ -10,18 +11,8 @@ export default function LiveMonitoringPanel() {
     <article className="panel">
       <h3>Live monitoring</h3>
       <p>Pause the floor event stream when reviewing reports.</p>
-      <label className="toggle-row">
-        Live event stream{" "}
-        <button className={`toggle ${paused ? "" : "on"}`} onClick={toggle} disabled={paused === null}>
-          <span />
-        </button>
-      </label>
-      <label className="toggle-row">
-        Email alert digest{" "}
-        <button className="toggle on">
-          <span />
-        </button>
-      </label>
+      <ToggleRow label="Live event stream" on={!paused} onClick={toggle} disabled={paused === null} />
+      <ToggleRow label="Email alert digest" on />
       {error && <p className="inline-error">{error}</p>}
     </article>
   );

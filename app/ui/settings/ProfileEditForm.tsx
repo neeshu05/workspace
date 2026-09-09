@@ -2,6 +2,8 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useProfileStore } from "../../../lib/stores/useProfileStore";
+import { readAvatarFile } from "../../../lib/utils/avatarUpload";
+import AvatarUpload from "../shared/AvatarUpload";
 
 type FormState = { name: string; department: string; bio: string; avatarImage: string | null };
 const EMPTY_FORM: FormState = { name: "", department: "", bio: "", avatarImage: null };
@@ -31,18 +33,10 @@ export default function ProfileEditForm() {
     const file = e.target.files?.[0];
     e.target.value = "";
     if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      setAvatarError("Please choose an image file");
-      return;
-    }
-    if (file.size > 1_000_000) {
-      setAvatarError("Image must be under 1MB");
-      return;
-    }
     setAvatarError("");
-    const reader = new FileReader();
-    reader.onload = () => setForm((f) => ({ ...f, avatarImage: reader.result as string }));
-    reader.readAsDataURL(file);
+    readAvatarFile(file)
+      .then((dataUrl) => setForm((f) => ({ ...f, avatarImage: dataUrl })))
+      .catch((err: Error) => setAvatarError(err.message));
   };
 
   const onSubmit = async (e: FormEvent) => {
@@ -60,27 +54,12 @@ export default function ProfileEditForm() {
   return (
     <article className="panel profile-edit-card">
       <div className="profile-edit-head">
-        <div className="avatar-upload">
-          <motion.div
-            className="avatar-preview"
-            key={form.avatarImage ?? "initials"}
-            style={form.avatarImage ? { backgroundImage: `url(${form.avatarImage})` } : undefined}
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.2 }}
-          >
-            {!form.avatarImage && (profile?.avatarInitials ?? "—")}
-          </motion.div>
-          <label className="avatar-upload-btn">
-            Change photo
-            <input type="file" accept="image/*" onChange={onAvatarFile} hidden />
-          </label>
-          {form.avatarImage && (
-            <button type="button" className="avatar-remove" onClick={() => setForm((f) => ({ ...f, avatarImage: null }))}>
-              Remove photo
-            </button>
-          )}
-        </div>
+        <AvatarUpload
+          avatarImage={form.avatarImage}
+          initials={profile?.avatarInitials ?? "—"}
+          onFileChange={onAvatarFile}
+          onRemove={() => setForm((f) => ({ ...f, avatarImage: null }))}
+        />
         <div className="profile-edit-head-text">
           <h3>Profile details</h3>
           <p>Update your photo, name, department and bio.</p>
