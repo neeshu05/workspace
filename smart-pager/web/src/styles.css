@@ -1,0 +1,37 @@
+:root { --brand: #2563eb; font-family: system-ui, sans-serif; color: #111827; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f3f4f6; }
+main { margin: 0 auto; padding: 16px; }
+main.wide { max-width: 860px; }
+.narrow { max-width: 420px; margin-top: 8vh; text-align: center; }
+.card { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+.stack { display: grid; gap: 12px; }
+input { padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 16px; }
+button { padding: 8px 14px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; font-size: 14px; cursor: pointer; }
+button.primary, .stack button { background: var(--brand); border-color: var(--brand); color: #fff; }
+button.link { border: 0; background: none; color: var(--brand); }
+button:disabled { opacity: .6; }
+.bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.bar h1 { flex: 1; margin: 0; font-size: 22px; }
+.dot { font-size: 12px; color: #b45309; }
+.dot::before { content: '●'; margin-right: 4px; }
+.dot.on { color: #059669; }
+.tabs { display: flex; gap: 6px; margin: 16px 0; flex-wrap: wrap; }
+.tabs button { text-transform: capitalize; }
+.tabs .active { background: var(--brand); border-color: var(--brand); color: #fff; }
+table { width: 100%; background: #fff; border-radius: 12px; border-collapse: collapse; overflow: hidden; }
+th, td { text-align: left; padding: 12px; border-bottom: 1px solid #f3f4f6; }
+.actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.pill { padding: 2px 10px; border-radius: 999px; font-size: 12px; text-transform: capitalize; background: #e5e7eb; }
+.pill.preparing { background: #fef3c7; } .pill.ready { background: #d1fae5; }
+.pill.cancelled { background: #fee2e2; }
+.muted { color: #6b7280; } .error { color: #b91c1c; }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: grid; place-items: center; }
+.qr { display: grid; gap: 12px; justify-items: center; }
+.logo { max-height: 64px; }
+.number { font-size: 56px; font-weight: 700; margin: 0 0 12px; color: var(--brand); }
+.track.ready { background: #ecfdf5; animation: pulse 1.2s ease-in-out infinite; }
+.ready h1 { color: #047857; }
+.hint { background: #eff6ff; padding: 12px; border-radius: 8px; font-size: 14px; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 12px rgba(5,150,105,.25); } }
+@media print { body * { visibility: hidden; } .qr, .qr * { visibility: visible; } .qr button { display: none; } }
